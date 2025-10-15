@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广州地铁模拟报站系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <!-- 头部导航 -->
+    <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold flex items-center">
+                <i class="fas fa-subway mr-3"></i>
+                广州地铁模拟报站系统
+            </h1>
+            <p class="mt-2 opacity-90">体验真实的广州地铁报站</p>
+        </div>
+    </header>
+
+    <!-- 主功能区域 -->
+    <main class="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- 控制面板 -->
+        <div class="bg-white rounded-xl shadow-md p-6 lg:col-span-1">
+            <h2 class="text-xl font-semibold mb-4 text-blue-800">控制面板</h2>
+            
+            <div class="mb-6">
+                <label class="block text-gray-700 mb-2">选择线路</label>
+                <select id="line-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="1">1号线</option>
+                    <option value="2">2号线</option>
+                    <option value="3">3号线</option>
+                    <option value="4">4号线</option>
+                    <option value="5">5号线</option>
+                    <option value="6">6号线</option>
+                    <option value="7">7号线</option>
+                    <option value="8">8号线</option>
+                    <option value="9">9号线</option>
+                    <option value="13">13号线</option>
+                    <option value="14">14号线</option>
+                    <option value="21">21号线</option>
+                    <option value="APM">APM线</option>
+                    <option value="GF">广佛线</option>
+                </select>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-gray-700 mb-2">选择方向</label>
+                <select id="direction-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="up">上行</option>
+                    <option value="down">下行</option>
+                </select>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-gray-700 mb-2">选择车站</label>
+                <select id="station-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <!-- 车站选项将通过JavaScript动态加载 -->
+                </select>
+            </div>
+
+            <button id="play-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                <i class="fas fa-play mr-2"></i>播放报站
+            </button>
+
+            <button id="stop-btn" class="w-full mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                <i class="fas fa-stop mr-2"></i>停止播放
+            </button>
+        </div>
+
+        <!-- 显示区域 -->
+        <div class="bg-white rounded-xl shadow-md p-6 lg:col-span-2">
+            <h2 class="text-xl font-semibold mb-4 text-blue-800">报站信息</h2>
+            
+            <div id="display-area" class="bg-gray-50 border border-gray-200 rounded-lg p-6 min-h-64 flex flex-col justify-center items-center">
+                <div class="text-center">
+                    <i class="fas fa-subway text-5xl text-blue-600 mb-4"></i>
+                    <p class="text-gray-600">请选择线路、方向和车站开始模拟报站</p>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <h3 class="text-lg font-medium text-gray-800 mb-2">当前播放</h3>
+                <div id="now-playing" class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                    <p class="text-gray-700">未播放</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 更新日志 -->
+    <section class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-xl shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4 text-blue-800">更新日志</h2>
+            
+            <div class="space-y-4">
+                <div class="border-l-4 border-blue-500 pl-4 py-2">
+                    <h3 class="font-medium text-gray-800">v1.2.0 - 2025/10/15</h3>
+                    <ul class="list-disc list-inside text-gray-600 mt-1 space-y-1">
+                        <li>新增APM线和广佛线报站支持</li>
+                        <li>优化音频播放性能</li>
+                        <li>修复部分车站名称显示问题</li>
+                    </ul>
+                </div>
+
+                <div class="border-l-4 border-blue-300 pl-4 py-2">
+                    <h3 class="font-medium text-gray-800">v1.1.0 - 2025/09/28</h3>
+                    <ul class="list-disc list-inside text-gray-600 mt-1 space-y-1">
+                        <li>新增14号线和21号线报站支持</li>
+                        <li>增加车站选择下拉菜单</li>
+                        <li>优化UI响应速度</li>
+                    </ul>
+                </div>
+
+                <div class="border-l-4 border-blue-200 pl-4 py-2">
+                    <h3 class="font-medium text-gray-800">v1.0.0 - 2025/09/15</h3>
+                    <ul class="list-disc list-inside text-gray-600 mt-1 space-y-1">
+                        <li>初始版本发布</li>
+                        <li>支持1-9号线及13号线报站</li>
+                        <li>基本控制功能实现</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-xl font-bold flex items-center">
+                        <i class="fas fa-subway mr-2"></i>
+                        广州地铁模拟报站系统
+                    </h2>
+                    <p class="mt-1 text-gray-400">© 2025 广州地铁模拟器</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-weibo text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-weixin text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
